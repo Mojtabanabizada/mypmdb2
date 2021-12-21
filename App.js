@@ -12,7 +12,7 @@ import MenuScreen from './screens/Menu';
 import WatchlistScreen from './screens/Watchlist';
 import UpcomingScreen from './screens/Upcoming';
 import SeenlistScreen from './screens/Seenlist';
-
+import Import_Export from './screens/Import_Export';
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
@@ -32,6 +32,7 @@ const MyStack = () => {
         <Stack.Screen name="Watchlist" component={WatchlistScreen} />
         <Stack.Screen name="Upcoming" component={UpcomingScreen} />
         <Stack.Screen name="Seenlist" component={SeenlistScreen} />
+        <Stack.Screen name="Import-Export" component={Import_Export} />
 
         <Stack.Screen
           name="Home"

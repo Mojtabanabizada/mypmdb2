@@ -27,20 +27,14 @@ const SignOut = ({navigation}) => {
   const [currentUser, setCurrentUser] = useState('Hello');
 
   const signOutUser = async ()=>{
-    // await signOut(authentication)
-    // .then((result)=>{
-    //     setIsSignedIn(false);
-    //     navigation.navigate('Login');
-    // })
-    // .catch((result)=>{
-    //     console.log(result);
-    // });
-    // NetInfo.isConnected.fetch();
-    const connction = await NetInfo.isConnected.fetch()
-    .then(isConnected => {
-      alert(isConnected);
+    await signOut(authentication)
+    .then((result)=>{
+        setIsSignedIn(false);
+        navigation.navigate('Login');
     })
-    console.log(connction);
+    .catch((result)=>{
+        console.error(result);
+    });
   };
 
   useEffect(() => {

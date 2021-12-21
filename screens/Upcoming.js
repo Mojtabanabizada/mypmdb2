@@ -7,50 +7,51 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { fetchUpcoming, addToSeenlist, addToWatchlist } from './functions';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+import {Item} from '../components/data'
 
-const Item = ({data}) => (
+// const Item = ({data}) => (
     
-    <View style={{flex: 1}}>
-        <ImageBackground 
-        source={{uri: data.banner}}
-        blurRadius={1}
-        style={{
-            width: width * 0.9947,
-            height: height,
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-        <Image
-          source={{uri: data.poster}}
-          style={{
-            width: width,
-            height: height / 2,
-            resizeMode: 'contain',
-            borderRadius: 8,
-          }}
-      />
-        <View style={styles.resultContainer}>
-          <Text style={styles.titleText}>{data.title} ({data.year})</Text>
-          <Text style={{fontSize: 14.5,fontWeight: 'bold',color: 'black',}}>Rating: {data.rating}</Text>
-          <Text style={{fontSize: 12, fontWeight: '600', color: 'black',}}>OVERVIEW : {data.description}</Text>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end',}}>
-            <TouchableOpacity style={styles.buttonStyle} onPress={() => addToWatchlist(data)}>
-              <Icon name='plus' size={25} color='white' /> 
-              <Text style={styles.buttonTextStyle}>Watchlist</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonStyle} onPress={() => addToSeenlist(data)}>
-              <Icon name='plus' size={25} color='white' />
-              <Text style={styles.buttonTextStyle}>Seenlist</Text>
-            </TouchableOpacity>
-          </View>
+//     <View style={{flex: 1}}>
+//         <ImageBackground 
+//         source={{uri: data.banner}}
+//         blurRadius={1}
+//         style={{
+//             width: width * 0.9947,
+//             height: height,
+//             flex: 1,
+//             justifyContent: 'center',
+//             alignItems: 'center',
+//         }}>
+//         <Image
+//           source={{uri: data.poster}}
+//           style={{
+//             width: width,
+//             height: height / 2,
+//             resizeMode: 'contain',
+//             borderRadius: 8,
+//           }}
+//       />
+//         <View style={styles.resultContainer}>
+//           <Text style={styles.titleText}>{data.title} ({data.year})</Text>
+//           <Text style={{fontSize: 14.5,fontWeight: 'bold',color: 'black',}}>Rating: {data.rating}</Text>
+//           <Text style={{fontSize: 12, fontWeight: '600', color: 'black',}}>OVERVIEW : {data.description}</Text>
+//           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end',}}>
+//             <TouchableOpacity style={styles.buttonStyle} onPress={() => addToWatchlist(data)}>
+//               <Icon name='plus' size={25} color='white' /> 
+//               <Text style={styles.buttonTextStyle}>Watchlist</Text>
+//             </TouchableOpacity>
+//             <TouchableOpacity style={styles.buttonStyle} onPress={() => addToSeenlist(data)}>
+//               <Icon name='plus' size={25} color='white' />
+//               <Text style={styles.buttonTextStyle}>Seenlist</Text>
+//             </TouchableOpacity>
+//           </View>
   
-        </View>
+//         </View>
 
 
-    </ImageBackground>
-    </View>
-  );
+//     </ImageBackground>
+//     </View>
+//   );
   
 const Upcoming = ({navigation}) => {
     const [loaded, setLoaded] = useState(false);
@@ -96,8 +97,8 @@ const Upcoming = ({navigation}) => {
             <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('SignOut')}>
             <Icon name='account' size={40} color='#6B3A2A' />
             </TouchableOpacity>
-            <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('Search')}>
-            <Icon name='magnify' size={40} color='#6B3A2A' />
+            <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('Home')}>
+            <Icon name='home-circle' size={40} color='#6B3A2A' />
             </TouchableOpacity>
             <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('Menu')}>
             <Icon name='menu' size={40} color='#6B3A2A' />

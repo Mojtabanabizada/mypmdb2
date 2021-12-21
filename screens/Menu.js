@@ -42,7 +42,7 @@ const Menu = ({navigation}) => {
           <Text style={styles.menuTextButton}>Upcoming Movies</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.footerButton} onPress={() => navigation.navigate('Import/Export Wactlist')}>
+        <TouchableOpacity style={styles.footerButton} onPress={() => navigation.navigate('Import-Export')}>
           <Text style={styles.menuTextButton}>Import/Export</Text>
         </TouchableOpacity>
 

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, ImageBackground, Animated, Text, Dimensions, View, TextInput,  TouchableOpacity, ScrollView, Image, FlatList, Button } from 'react-native';
+import {StyleSheet, ImageBackground, Animated, Text, Dimensions, View, TextInput,  TouchableOpacity, ScrollView, Image, FlatList, Button, StatusBar } from 'react-native';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { authentication, db } from '../firebase';
 import { collection, getDocs, doc, setDoc, updateDoc } from 'firebase/firestore/lite';
@@ -12,51 +12,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {addToWatchlist, fetchRecomendation, addToSeenlist, fetchUpcomingMovies} from './functions'
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-
-const Item = ({data}) => (
-    
-    <View style={{flex: 1}}>
-        <ImageBackground 
-        source={{uri: data.banner}}
-        blurRadius={1}
-        style={{
-            width: width * 0.9947,
-            height: height,
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-        <Image
-          source={{uri: data.poster}}
-          style={{
-            width: width,
-            height: height / 2,
-            resizeMode: 'contain',
-            borderRadius: 8,
-          }}
-      />
-        <View style={styles.resultContainer}>
-          <Text style={styles.titleText}>{data.title} ({data.year})</Text>
-          <Text style={{fontSize: 14.5,fontWeight: 'bold',color: 'black',}}>Rating: {data.rating}</Text>
-          <Text style={{fontSize: 12, fontWeight: '600', color: 'black',}}>OVERVIEW : {data.description}</Text>
-          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end',}}>
-            <TouchableOpacity style={styles.buttonStyle} onPress={() => addToWatchlist(data)}>
-              <Icon name='plus' size={25} color='white' /> 
-              <Text style={styles.buttonTextStyle}>Watchlist</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonStyle} onPress={() => addToSeenlist(data)}>
-              <Icon name='plus' size={25} color='white' />
-              <Text style={styles.buttonTextStyle}>Seenlist</Text>
-            </TouchableOpacity>
-          </View>
-  
-        </View>
+import {Item} from '../components/data'
 
 
-    </ImageBackground>
-    </View>
-
-);
 export default function Home ({navigation}) {
   const [user, setUser] = useState('Hello World!');
   const [popularMovies, setPopularMovies] = useState({results: []});
@@ -89,21 +47,21 @@ export default function Home ({navigation}) {
 
   return (
     <View style={styles.body}>
+      <StatusBar backgroundColor={'black'}/>
       <View style={styles.homeTextContainer}>
         <Text style={styles.homeText}>Home</Text>
       </View>
       <View style={styles.flatlistContainer}>
-        <FlatList
-          data={popularMovies.results}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-          pagingEnabled={true}
-          bounces={false}
-          showsHorizontalScrollIndicator={false}
-          snapToAlignment={'center'}
-
-        />
+          <FlatList
+            data={popularMovies.results}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+            pagingEnabled={true}
+            bounces={false}
+            showsHorizontalScrollIndicator={false}
+            snapToAlignment={'center'}
+          />
       </View>
       <View style={styles.footer}>
         <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('SignOut')}>
@@ -160,7 +118,6 @@ export default function Home ({navigation}) {
     },
     flatlistContainer:{
     flex: 1.2,
-    resizeMode: 'contain',
     },
     button: {
       justifyContent: 'center',
@@ -178,12 +135,19 @@ export default function Home ({navigation}) {
     },
     resultContainer: {
       flex: 1,
+      // flexDirection: 'row',
+      justifyContent: 'center',
+      borderRadius: 10,
+      alignItems: 'flex-start',
       width: '90%',
-      borderWidth: 2,
-      borderColor: '#C4C4C4',
-      padding: 10,
-      backgroundColor: 'rgba(226, 181, 166, 0.7)',
-      borderRadius: 8,
+      backgroundColor: 'rgba(26,26,26,0.9)',
+      },
+    text:{
+      color: 'white',
+      paddingLeft: 8,
+      paddingRight: 8,
+      fontFamily:'FiraSans-Black',
+  
     },
     searchText: {
       fontSize: 15,
@@ -255,4 +219,26 @@ export default function Home ({navigation}) {
       color: 'white',
       fontWeight: '600',
     },
+    genreContainer: {
+      flex: 1, 
+      flexDirection: 'row', 
+      height: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 2,    
+      },
+    genre: {
+      backgroundColor: 'white',
+      fontFamily:'Times New Roman',
+      color: 'black',
+      height: 23,
+      marginRight: 10,
+      marginLeft: 5,
+      borderRadius: 10,
+      paddingLeft: 8,
+      paddingRight: 8,
+      alignSelf: 'center',
+     
+    }
+  
   });

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { collection, getDocs, doc, setDoc, updateDoc } from 'firebase/firestore/lite';
+import { collection, getDocs, doc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore/lite';
 import axios from 'axios';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { authentication, db } from '../firebase';
@@ -18,6 +18,28 @@ const addToWatchlist = async data => {
     console.log(error);
   }
 };
+
+const removeFromWatchlist = async data => {
+  const auth = getAuth();
+  const user = auth.currentUser.email;
+  try {
+    await deleteDoc(doc(db, user + 'watchList', data.title));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeFromSeenlist = async data => {
+  const auth = getAuth();
+  const user = auth.currentUser.email;
+  try {
+    await deleteDoc(doc(db, user + 'seenlist', data.title));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 
 const addToSeenlist = async data => {
     const auth = getAuth();
@@ -45,6 +67,40 @@ async function fetchWatchlist  (){
     // console.log(watchlist[0].title)
   
   }
+  async function importWatchlist  (friend){
+    const auth = getAuth();
+    const user = auth.currentUser.email;
+    const citiesCol = collection(db, friend + 'watchList');
+    const citySnapshot = await getDocs(citiesCol);
+    const watchlist = citySnapshot.docs.map(doc => doc.data());
+    watchlist.forEach(element => {
+
+      try {
+        const cityRef = doc(db, user + 'watchList', element.title);
+        setDoc(cityRef, element);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  async function exportWatchlist  (friend){
+    const auth = getAuth();
+    const user = auth.currentUser.email;
+    const citiesCol = collection(db, user + 'watchList');
+    const citySnapshot = await getDocs(citiesCol);
+    const watchlist = citySnapshot.docs.map(doc => doc.data());
+    watchlist.forEach(element => {
+      try {
+        const cityRef = doc(db, friend + 'watchList', element.title);
+        setDoc(cityRef, element);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+
   async function fetchUpcoming  (){
     const auth = getAuth();
     const user = auth.currentUser.email;
@@ -263,7 +319,20 @@ async function fetchUpcomingMovies (){
 
   
 
-export {fetchUpcoming, addToWatchlist, fetchWatchlist, fetchRecomendation,  addToSeenlist, fetchSeenlist, fetchMovieData, fetchUpcomingMovies};
+export {
+  fetchUpcoming,
+  addToWatchlist,
+  fetchWatchlist, 
+  fetchRecomendation,  
+  addToSeenlist, 
+  fetchSeenlist, 
+  fetchMovieData, 
+  fetchUpcomingMovies,
+  removeFromWatchlist,
+  removeFromSeenlist,
+  importWatchlist,
+  exportWatchlist,
+};
 
 
   // http://www.omdbapi.com/?i=tt3896198&apikey=601a74e1

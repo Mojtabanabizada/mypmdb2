@@ -13,28 +13,12 @@ import {
   FlatList,
   Image,
   } from 'react-native';
-  import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-  import {upcomingMoviesIMDB} from './database';
-  import {fetchWatchlist} from './functions'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-  const {width, height } = Dimensions.get('screen');
+import {upcomingMoviesIMDB} from './database';
+import {fetchWatchlist} from './functions'
+import {Watch} from '../components/data'
 
-  const Item = ({data}) => (
-
-  <View style={styles.itemContainer}>
-    <View style={styles.imageContainer}>
-        <Image
-            source={{uri: data.poster}}
-            style={styles.itemImage}
-        />
-    </View>
-    <View style={styles.textContainer}>
-        <Text style = {styles.textTitle}>{data.title} ({data.year})</Text>
-        <Text style = {styles.descText}>Plot: {data.description}</Text>
-    </View>
-</View>
-);
-  
 
 
 const Watchlist = ({navigation}) => {
@@ -42,9 +26,7 @@ const Watchlist = ({navigation}) => {
   const [loaded, setLoaded] = useState(false);
 
     const renderItem = ({ item }) => (
-        <Item
-          data={item}
-        />
+        <Watch data={item} />
     )
     const init =  async ()=>{
       const myWatchlist = await fetchWatchlist();
@@ -55,11 +37,11 @@ const Watchlist = ({navigation}) => {
 
     useEffect(() => {
 
-      if (!loaded) {
+      // if (!loaded) {
 
       init();
       setLoaded(true);
-      }
+      // }
   
     }, [loaded, watchlist]);
   
@@ -76,7 +58,7 @@ const Watchlist = ({navigation}) => {
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           horizontal={false}
-          pagingEnabled
+          pagingEnabled={false}
           bounces={false}
           showsHorizontalScrollIndicator={false}
         />
@@ -86,13 +68,13 @@ const Watchlist = ({navigation}) => {
 
       <View style={styles.footer}>
       <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('SignOut')}>
-        <Icon name='account' size={40} color='#000' />
+        <Icon name='account' size={40} color='#6B3A2A' />
         </TouchableOpacity>
         <TouchableOpacity style={{  width: 50, height: 50,}}onPress={() => navigation.navigate('Home')}>
-        <Icon name='home-circle' size={40} color='#000' />
+        <Icon name='home-circle' size={40} color='#6B3A2A' />
         </TouchableOpacity>
         <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('Menu')}>
-        <Icon name='menu' size={40} color='#000' />
+        <Icon name='menu' size={40} color='#6B3A2A' />
         </TouchableOpacity>
       </View> 
     </View>
@@ -185,65 +167,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'flex-end',
   },
-  bottombutton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '70%',
-  },
-  itemContainer: {
-    flex: 1,
-    height: 120,
-    flexDirection: 'row',
-    // backgroundColor: 'red',
-    margin: 2,
-    alignItems: 'center',
-    border: 3,
-    borderColor: 'balck',
-    // justifyContent: 'flex-start',
-  },
-  imageContainer:{
-    borderRadius: 15,
-
-  },
-  textContainer: {
-    
-  },
-  itemImage: {
-    width: 100,
-    height: 120,
-    resizeMode: 'contain',
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 3.84,    
-    // elevation: 3,
-
-  },
-  textTitle: {
-  fontSize: 12,
-  fontWeight: "900",  
-  textShadowColor: 'rgba(0, 0, 0, 0.20)',
-  textShadowOffset: {width: -1, height: 1},
-  textShadowRadius: 20,
-  },
-  starsText: {
-  fontSize: 12,
-  fontWeight: "700",  
-  textShadowColor: 'rgba(0, 0, 0, 0.20)',
-  textShadowOffset: {width: -1, height: 1},
-  textShadowRadius: 15,
-  },
-  descText: {
-  fontSize: 12,
-  fontWeight: "400",  
-  textShadowColor: 'rgba(0, 0, 0, 0.20)',
-  textShadowOffset: {width: -1, height: 1},
-  textShadowRadius: 5,
- },
-
 });
 
 

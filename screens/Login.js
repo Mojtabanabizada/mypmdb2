@@ -10,6 +10,7 @@ import {
   View,
   KeyboardAvoidingView,
   Alert,
+  NetInfo,
   } from 'react-native';
 import { authentication } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';

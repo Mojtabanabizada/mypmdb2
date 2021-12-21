@@ -15,25 +15,9 @@ import {
   } from 'react-native';
   import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
   import {fetchSeenlist} from './functions'
+  import {Seen} from '../components/data'
 
-  const {width, height } = Dimensions.get('screen');
 
-  const Item = ({data}) => (
-
-  <View style={styles.itemContainer}>
-    <View style={styles.imageContainer}>
-        <Image
-            source={{uri: data.poster}}
-            style={styles.itemImage}
-        />
-    </View>
-    <View style={styles.textContainer}>
-        <Text style = {styles.textTitle}>{data.title} ({data.year})</Text>
-        <Text style = {styles.descText}>Plot: {data.description}</Text>
-    </View>
-</View>
-);
-  
 
 
 const Seenlist = ({navigation}) => {
@@ -41,7 +25,7 @@ const Seenlist = ({navigation}) => {
   const [loaded, setLoaded] = useState(false);
 
     const renderItem = ({ item }) => (
-        <Item
+        <Seen
           data={item}
         />
     )
@@ -54,11 +38,11 @@ const Seenlist = ({navigation}) => {
 
     useEffect(() => {
 
-      if (!loaded) {
+      // if (!loaded) {
 
       init();
       setLoaded(true);
-      }
+      // }
   
     }, [loaded, seenlist]);
   
@@ -66,7 +50,7 @@ const Seenlist = ({navigation}) => {
 
     <View style={styles.body}>
       <View style={styles.homeTextContainer}>
-        <Text style={styles.menuText}>Watchlist</Text>
+        <Text style={styles.menuText}>Seenlist</Text>
       </View>
 
       <View style={styles.container} >
@@ -75,8 +59,8 @@ const Seenlist = ({navigation}) => {
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           horizontal={false}
-          pagingEnabled
-          bounces={false}
+          pagingEnabled={false}
+          bounces={true}
           showsHorizontalScrollIndicator={false}
         />
 
@@ -85,13 +69,13 @@ const Seenlist = ({navigation}) => {
 
       <View style={styles.footer}>
       <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('SignOut')}>
-        <Icon name='account' size={40} color='#000' />
+        <Icon name='account' size={40} color='#6B3A2A' />
         </TouchableOpacity>
         <TouchableOpacity style={{  width: 50, height: 50,}}onPress={() => navigation.navigate('Home')}>
-        <Icon name='home-circle' size={40} color='#000' />
+        <Icon name='home-circle' size={40} color='#6B3A2A' />
         </TouchableOpacity>
         <TouchableOpacity style={{  width: 50, height: 50,}} onPress={() => navigation.navigate('Menu')}>
-        <Icon name='menu' size={40} color='#000' />
+        <Icon name='menu' size={40} color='#6B3A2A' />
         </TouchableOpacity>
       </View> 
     </View>
